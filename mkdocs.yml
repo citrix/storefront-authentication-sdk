@@ -1,0 +1,25 @@
+site_name: Citrix StoreFront 1811 Authentication SDK
+site_description: Documentation and Reference Guide for the Citrix StoreFront 1811 Authentication SDK
+theme_dir: citrix-sdk
+use_directory_urls: True
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+     anchorlink: True
+
+pages:
+- StoreFront Services Authentication SDK: index.md
+- StoreFront - Authentication SDK - Third Party Notices: third-party-notices.md
+- Known Issues: known-issues.md
+- Security Token Services API: security-token-services-api.md
+- Citrix Common Forms API: common-forms-authentication-api.md
+- Citrix Common Authentication Forms Language: common-authentication-forms-language.md
+- CitrixAuth Authentication Scheme: citrixauth-authentication-scheme.md
+- StoreFront Authentication Form Generation: storefront-authentication-form-generation.md
+- StoreFront Authentication SDK JavaScript API: storefront-authentication-sdk-javascript-api.md
+- Certificate Identity Declaration Sample: sample-certificate-identity-declaration.md
+- Custom Federated Logon Service Sample: custom-federated-logon-service-sample.md
+- Magic Word Sample: magic-word-sample.md
+- Test Forms Sample: test-forms-sample.md
+- U2F Sample: u2f-sample.md
