@@ -9,9 +9,9 @@ This sample for the StoreFront Authentication SDK demonstrates how to create and
 
 #### FIDO: Universal Second Factor
 
-The mission of the Fast IDentity Online (FIDO) Alliance (https://fidoalliance.org/ ) is to change the nature of online authentication, improving the usability and security. The Universal Second Factor, U2F, specification describes a user carrying a U2F device with built-in support in web browsers. The experience allows online services to augment the security of their existing password infrastructure by adding a strong second factor to user login. The user logs in with a username and password as before. The service can also prompt the user to present a second factor device at any time it chooses.
+The mission of the Fast IDentity Online [(FIDO) Alliance](https://fidoalliance.org/) is to change the nature of online authentication, improving the usability and security. The Universal Second Factor, U2F, specification describes a user carrying a U2F device with built-in support in web browsers. The experience allows online services to augment the security of their existing password infrastructure by adding a strong second factor to user login. The user logs in with a username and password as before. The service can also prompt the user to present a second factor device at any time it chooses.
 
-At time of writing, the Google Chrome browser has built-in support for the FIDO JavaScript API described here: https://fidoalliance.org/specs/fido-u2f-v1.0-nfc-bt-amendment-20150514/fido-u2f-javascript-api.html and utilized by this sample.
+At time of writing, the Google Chrome browser has built-in support for the FIDO JavaScript API described here: <https://fidoalliance.org/specs/fido-u2f-v1.0-nfc-bt-amendment-20150514/fido-u2f-javascript-api.html> and utilized by this sample.
 
 **Note**: The Google support requires that the web site being accessed, is done so with both an https and fully qualified domain name in the URL.
 
@@ -69,17 +69,17 @@ To remove the authentication customization, prior to uninstalling it, again use 
 
 The feature can also be managed through PowerShell, after first adding all the StoreFront PowerShell modules:
 
-```
+```powershell
 Get-Module "Citrix.StoreFront.*" -ListAvailable | Import-Module
 ```
 First the U2F StoreFront authentication customization feature must be added:
 
-```
+```powershell
 Install-STFFeature -PackageName " U2FAuthentication"
 ```
 The Authentication Service to which the Feature will be added must then be found. This can be done either from the associated store, in this example, the store is named: “Store”, and is located at virtual path: /Citrix/Store:
 
-```
+```powershell
 $store = Get-STFStoreService -VirtualPath "/Citrix/Store"
 # Get the Authentication Service from the associated Store 
 $authService = Get-STFAuthenticationService -StoreService $store
@@ -87,41 +87,45 @@ $authService = Get-STFAuthenticationService -StoreService $store
 
 Or by the virtual path of the Authentication Service, in this case: /Citrix/StoreAuth:
 
-```
+```powershell
 $authService = Get-STFAuthenticationService -VirtualPath "/Citrix/StoreAuth"
 ```
 Once the Authentication Service has been located, then the feature must be added, using the associated name of the protocol choice, which in this case is: “CustomForms”:
 
-```
+```powershell
 Add-STFAuthenticationServiceProtocol -Name "CustomForms" -AuthenticationService 
 $authService
 ```
 The following will ensure that the U2F authentication method is enabled:
 
+```powershell
 Enable-STFAuthenticationServiceProtocol -AuthenticationService $authService -Name "CustomForms"
+```
 
 The U2F authentication feature can be removed from an Authentication Service with the following command:
 
+```powershell
 Remove-STFAuthenticationServiceProtocol -Name "CustomForms" -AuthenticationService $authService
+```
 
 ####Receiver for Web JavaScript Plug-in
 
 The administrator can manage the Receiver for Web JavaScript plug-in using PowerShell only.
 Assuming that the StoreFront modules have been loaded, as shown above, then the Receiver for Web plug-in feature must be first added:
 
-```
+```powershell
 Install-STFFeature -PackageName "U2FReceiverPlugin"
 ```
 
 The Receiver for Web site to which the Feature will be added must then be found. This can be done for a specific Receiver for Web site, if its virtual path is known, in this example: /Citrix/StoreWeb
 
-```
+```powershell
 $wrSite = Get-STFWebReceiverService -VirtualPath /Citrix/StoreWeb
 ```
 
 Alternatively, all the Receiver for Web sites for a specified Store can be found, in this example the store is named: “Store” and is located at virtual path /Citrix/Store:
 
-```
+```powershell
 $StoreVirtualPath = "/Citrix/Store"
 $store = Get-STFStoreService -VirtualPath "/Citrix/Store"
 
@@ -130,11 +134,13 @@ $store = Get-STFStoreService -VirtualPath "/Citrix/Store"
 
 Once a Receiver for Web site has been located, the plug-in can be added:
 
+```powershell
 Add-STFWebReceiverFeature -Name "U2FReceiverPlugin" -WebReceiverService $wrSite
+```
 
 The plug-in can be removed again:
 
-```
+```powershell
 Remove-STFWebReceiverFeature –Name "U2FReceiverPlugin" –WebReceiverService $wrSite
 ```
 

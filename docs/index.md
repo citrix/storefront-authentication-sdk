@@ -39,29 +39,29 @@ The following prerequisites are required, installed in the following order:
 
 ### References
 
-[1] RFC 2617 HTTP Authentication: Basic and Digest Access Authentication: <http://tools.ietf.org/html/rfc2617>
+[1] [RFC 2617 HTTP Authentication: Basic and Digest Access Authentication](http://tools.ietf.org/html/rfc2617)
 
-[2] CitrixAuth Authentication Scheme 1811
+[2] [CitrixAuth Authentication Scheme 1811](citrixauth-authentication-scheme.md)
 
-[3] Security Token Services API 1811
+[3] [Security Token Services API 1811](security-token-services-api.md)
 
-[4] Citrix Common Authentication Forms Language 1811
+[4] [Citrix Common Authentication Forms Language 1811](common-authentication-forms-language.md)
 
-[5] ASP.Net MVC 4: <http://www.asp.net/mvc/mvc4>
+[5] [ASP.Net MVC 4](http://www.asp.net/mvc/mvc4)
 
-[6] The Service Locator Pattern: <http://msdn.microsoft.com/en-us/library/ff648968.aspx> 
+[6] [The Service Locator Pattern](http://msdn.microsoft.com/en-us/library/ff648968.aspx)
 
-[7] Authenticode: <http://msdn.microsoft.com/en-us/library/ms537359(v=vs.85).aspx>
+[7] [Authenticode](http://msdn.microsoft.com/en-us/library/ms537359(v=vs.85).aspx)
 
-[8] Time Stamping Authenticode Signatures: <http://msdn.microsoft.com/en-us/library/windows/desktop/bb931395(v=vs.85).aspx> 
+[8] [Time Stamping Authenticode Signatures](http://msdn.microsoft.com/en-us/library/windows/desktop/bb931395(v=vs.85).aspx)
 
-[9] StoreFront Authentication Form Generation 1811
+[9] [StoreFront Authentication Form Generation 1811](storefront-authentication-form-generation.md)
 
-[10] StoreFront Authentication SDK JavaScript API 1811
+[10] [StoreFront Authentication SDK JavaScript API 1811](storefront-authentication-sdk-javascript.md)
 
-[11] Citrix StoreFront PowerShell SDK: <https://developer-docs.citrix.com/projects/storefront-powershell-sdk/en/latest/> 
+[11] [Citrix StoreFront PowerShell SDK](https://developer-docs.citrix.com/projects/storefront-powershell-sdk/en/latest/)
 
-[12] Citrix Federated Authentication Service: <https://docs.citrix.com/en-us/citrix-virtual-apps-desktops/secure/federated-authentication-service.html>
+[12] [Citrix Federated Authentication Service](https://docs.citrix.com/en-us/citrix-virtual-apps-desktops/secure/federated-authentication-service.html)
 
 
 ## StoreFront Services Authentication Overview
@@ -86,7 +86,7 @@ Configuration data is stored in the associated web.config file. When the web app
 
 ![](img/storeauth-2.png)
 
-The StoreFront Administration Console utilizes a PowerShell layer to configure the solution. The PowerShell layer makes extensive use of a custom configuration provider that allows certain portions of the web.config file to be accessed as if it were a mounted drive; see Section 3.4.3. This simplifies accessing the configuration data using standard PowerShell commands.
+The StoreFront Administration Console utilizes a PowerShell layer to configure the solution. The PowerShell layer makes extensive use of a custom configuration provider that allows certain portions of the web.config file to be accessed as if it were a mounted driver. This simplifies accessing the configuration data using standard PowerShell commands.
 
 StoreFront 1811.1.0 also implements a new PowerShell based SDK [11], alongside the original SDK.
 
@@ -94,12 +94,12 @@ StoreFront 1811.1.0 also implements a new PowerShell based SDK [11], alongside t
 
 StoreFront 1811.1.0 has a JavaScript API for Receiver for Web. This allows plug-ins to be created that complement the forms created using the Citrix Common Forms Protocol, to display new user interface widgets and to automatically capture credentials. For more information see [10], and for examples, investigate the Test Forms and FIDO U2F samples.
 
-
 ### Authentication Support Services
 
 In addition to the Authentication web application, there are additional Windows services that provide functionality requiring higher levels of privilege. The Authentication web application communicates with these WCF services utilizing named pipes for the communication channel. Access to these services is controlled through membership of local Windows groups.
 
 #### Credential Wallet
+
 The Credential Wallet is a WCF service hosted in a Windows service called Citrix Credential Wallet, or its localized variant. The hosted Credential Wallet service is an in-memory hash table that securely stores encrypted passwords.
 
 The samples demonstrate how to store passwords in the Credential Wallet by utilizing the existing functionality in one of the specialized claims.
@@ -115,7 +115,6 @@ The samples demonstrate how to delegate credential validation to the most approp
 #### XML Service Authentication
 
 When StoreFront is not in the same Active Directory domain as Citrix Virtual Apps and Desktops , and it is not possible to put Active Directory trusts in place, you can configure StoreFront to use the Citrix Virtual Apps and Desktops XML Service to authenticate the user name and password credentials. Further details can be found at: <https://docs.citrix.com/en-us/storefront/current-release/configure-authentication-and-delegation/xml-authentication.html>. 
-
 
 ### Relying Party Authentication: CitrixAuth
 
@@ -600,7 +599,7 @@ When the package has been expanded by the StoreFront Framework, it should contai
 * **GAC**: This directory contains the assemblies that will have been added to the .Net Global Assembly Cache.
 * **template**: This directory contains the files that will be used to create an instance of the feature. For a web application feature, it will contain the files that will be added to the App\_Data and bin directories. For a Windows Service it will contain all the files required for that service.
 
-An msbuild task is provided to create a package from a package definition file and its usage is described in Section 5.4.9.
+An msbuild task is provided to create a package from a package definition file and its usage is described in [Build Tasks](#build-tasks).
 
 #### Package Definition Language
 
@@ -677,7 +676,7 @@ Before attempting to uninstall a sample, you must remove the associated authenti
 
 ### Getting Started
 
-In order to open and build the samples, you must first provision a development environment. This requires the following components to be installed on a suitable Windows machine, as described in the prerequisites (see Section 1.2.1).
+In order to open and build the samples, you must first provision a development environment. This requires the following components to be installed on a suitable Windows machine, as described in the prerequisites (see [Prerequisites](#prerequisites)).
 
 All the other tools and components required to build the samples are included in the SDK.
 A temporary code-signing certificate for test purposes has been provided in the following location: AuthSDK.zip/Certificates/YourCompany.pfx
@@ -799,11 +798,11 @@ The installer has the following responsibilities during uninstall:
 
 * Run the RemoveInstalledClass custom action, described in [Visual Studio Solution Layout](#visual-studio-solution-layout)
 * Remove the Feature package and registry entries added during install
-This project also contains the Feature Package definition, as described in Section 4.1, and runs the FeaturePackager msbuild task in the post-build step to build the Feature Package.
+This project also contains the Feature Package definition, as described in the section [StoreFront Package](#storefront-package), and runs the FeaturePackager msbuild task in the post-build step to build the Feature Package.
 
 #### Installer.CustomActions
 
-This C# class library project contains the custom actions required by the installer in section 5.4.6.
+This C# class library project contains the custom actions required by the installer in section [Installer](#installer).
 
 **Note**: The custom actions must be targeted at the x64 Platform and not AnyCPU. This is to force the Windows Installer to run the actions as x64, which is required to gain access to the correct registry entries.
 

@@ -123,17 +123,16 @@ If the user enters an invalid value, then an error label is returned that specif
   <Input />
 </Requirement>
 ```
+
 This is rendered as:
 
 ![](img/authforms1.png)
 
-
-
-###Requirement Element Idioms
+### Requirement Element Idioms
 
 Examples of the common types of Requirement elements are shown below. Element values that are <mark>highlighted</mark> identify variable names or user-visible labels that are controlled by the author of the authentication form. Element values that are bolded and underscored indicate field enumeration types defined in this document.
 
-####Cancel Button
+#### Cancel Button
 
 The assumption is that forms shall normally have a cancel button, positioned in the natural location for each client platform, relative to the other buttons. However, the cancel button will only be shown if the element is present at: /AuthenticateResponse/AuthenticationRequirements/CancelButtonText.
 
@@ -142,9 +141,9 @@ Notes:
 - If a form author specifies CancelButtonText, client implementors may still not show a cancel button if it is not appropriate for the device.
 - The absence of CancelButtonText doesn’t preclude the user-agent sending a cancellation request.
 
-####Heading
+#### Heading
 
-This example is for a change password form. If a heading is not included as the first requirement element in a form, Receiver clients may provide a default heading that is tailored according to the user action that initiated the authentication process.  
+This example is for a change password form. If a heading is not included as the first requirement element in a form, Receiver clients may provide a default heading that is tailored according to the user action that initiated the authentication process.
 
 ```
 <Requirement>
@@ -155,11 +154,11 @@ This example is for a change password form. If a heading is not included as the 
     <Text>Change Password</Text>
     <Type>heading</Type>
   </Label>
-  <Input />
+  <Input/>
 </Requirement>
 ```
 
-####Message
+#### Message
 
 This example is for an expired password message, added to a change password form for explanation. 
 
@@ -169,7 +168,7 @@ This example is for an expired password message, added to a change password form
     <Type>none</Type>
   </Credential>
   <Label>
-    <Text>Your password has &lt;b&gt;expired&lt;/b&gt; and must be changed</Text>
+    <Text>Your password has expired and must be changed</Text>
     <Type>information</Type>
   </Label>
   <Input />
@@ -329,6 +328,7 @@ Note for form authors: The initial selection element is optional, and it is the 
 A multi-combo box is similar to a combo box, except multiple selections can be made.
 
 The following multi-combo box, initially has the second item selected.
+
 ```
 <Requirement>
   <Credential>
@@ -387,19 +387,20 @@ Saving credentials has important semantic obligations for the client, therefore 
 ####Submit Button
 
 Multiple buttons can appear in a form, all of them will invoke form submission.
+
 ```
-			<Requirement>
-				<Credential>
-					<ID>loginBtn</ID>
-					<Type>none</Type>
-				</Credential>
-				<Label>
-					<Type>none</Type>
-				</Label>
-				<Input>
-					<Button>Log on</Button>
-				</Input>
-			</Requirement>
+<Requirement>
+	<Credential>
+		<ID>loginBtn</ID>
+		<Type>none</Type>
+	</Credential>
+	<Label>
+		<Type>none</Type>
+	</Label>
+	<Input>
+		<Button>Log on</Button>
+	</Input>
+</Requirement>
 ```
 
 ####Assistive Text

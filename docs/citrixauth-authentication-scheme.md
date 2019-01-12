@@ -8,7 +8,7 @@ The purpose of this document is to describe the CitrixAuth authentication scheme
 
 ###CitrixAuth Scheme
 
-This section defines an RFC2617 [1] extension to support authentication to StoreFront Services Relying Parties, such as the resources service. The extension auth-scheme is CitrixAuth and is case-sensitive. It uses the standard HTTP Authorization and WWW-Authenticate HTTP headers as defined in RFC2617.
+This section defines an [RFC2617](http://tools.ietf.org/html/rfc2617)[1] extension to support authentication to StoreFront Services Relying Parties, such as the resources service. The extension auth-scheme is CitrixAuth and is case-sensitive. It uses the standard HTTP Authorization and WWW-Authenticate HTTP headers as defined in RFC2617.
 
 The headers have the following formats, in conformance with RFC2617:
 
@@ -96,7 +96,7 @@ Content-Length: 773
 
 ###Client Processing of a Challenge
 
-When a client receives a CitrixAuth challenge, it must respond by sending a Request Security Token message to the location specified in the challenge. For more information on the Request Security Token message see the StoreFront Security Token Services API document [2].
+When a client receives a CitrixAuth challenge, it must respond by sending a Request Security Token message to the location specified in the challenge. For more information on the Request Security Token message see the [StoreFront Security Token Services API document](security-token-services-api.md).
 Consider the following example. The client has tried to access the URL: https://storefront.enterprise.com/Citrix/Store/resources/v2/launch
 and received the following challenge:
 
@@ -138,4 +138,4 @@ Notes:
 
 [1] HTTP Authentication: Basic and Digest Access Authentication: <http://www.ietf.org/rfc/rfc2617.txt>
 
-[2] StoreFront Security Token Services API 1811
+[2] [StoreFront Security Token Services API 1811](security-token-services-api.md)

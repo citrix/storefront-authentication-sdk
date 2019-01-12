@@ -148,8 +148,13 @@ This function adds the custom credential handler provided into Receiver for Web,
 
 ####Example
 
-```
-// Add a sample Auto post credential to Receiver for Web CTXS.ExtensionAPI.addCustomCredentialHandler({	// The name of the credential, must match the type returned by the server	getCredentialTypeName: function () { return "sample-auto-post"; },	// Function where information to be auto-posted is generated	getDataToAutoPost: function ($form, callback) { callback(navigator.userAgent); }});
+```javascript
+// Add a sample Auto post credential to Receiver for Web CTXS.ExtensionAPI.addCustomCredentialHandler({
+	// The name of the credential, must match the type returned by the server
+	getCredentialTypeName: function () { return "sample-auto-post"; },
+	// Function where information to be auto-posted is generated
+	getDataToAutoPost: function ($form, callback) { callback(navigator.userAgent); }
+});
 ```
 ###CTXS.ExtensionAPI.addCustomAuthLabelHandler
 
@@ -161,7 +166,9 @@ This function provides the corresponding behavior to addCustomCredentialHandler 
 |---|---|---|
 |labelHandler|Object|Label handler to be added.|
 
-####Example ```
+####Example
+ 
+```javascript
 // Sample Label handler
 CTXS.ExtensionAPI.addCustomAuthLabelHandler({
 	// The name of the label, must match the type returned by the server
@@ -210,14 +217,16 @@ The purpose of this function is to provide the markup for rendering the custom l
 
 ####Parameters
 
-|Parameter|Type|Description||---|---|---||requirements|object|Parsed contents of the requirements node provided by the server. See Appendix I for details.|
+|Parameter|Type|Description|
+|---|---|---|
+|requirements|object|Parsed contents of the requirements node provided by the server. See Appendix I for details.|
 
 ####Returns
 Expected return value is a jQuery object with all necessary markup to render the label.
 
 ####Example
 
-```
+```javascript
 // Rendering instructions for a flash object label
 getLabelTypeMarkup: function (requirements) {
 	return $("<object/>")
@@ -240,7 +249,7 @@ String – name of existing label type to parse as, one of: none, plain, heading
 
 ####Example
 
-```
+```javascript
 // Instruction to parse the label as if it was a standard type
 parseAsType: function () { return "plain"; }
 ```
@@ -252,16 +261,26 @@ The function allows custom labels providing custom XML tags to be parsed into th
 ####Parameters
 
 |Parameter|Type|Description|
-|---|---|---||labelNode|jQuery Object|XML structure for the label. Contains the label node of the requirement provided by the server, to be parsed into a jQuery object used by rest of form generation structure.|
+|---|---|---|
+|labelNode|jQuery Object|XML structure for the label. Contains the label node of the requirement provided by the server, to be parsed into a jQuery object used by rest of form generation structure.|
 
 ####Returns
 
 A JavaScript object with all of the information parsed from the requirements node. The type property is set by Receiver for Web afterwards, so would override any value applied within this function. There is no mandatory data to provide in the response. 
 
 ####Example
-```// Provide custom parsing for a custom progress tracking label.// Label consists of a series of discrete images, displayed according to progress level.parseLabelNode: function(labelNode) {	var textNode = $("Text", labelNode);	var progressArray = $("progressArray", labelNode).children();	return {
-		text: textNode.text(),		progressStates: progressArray
-	};}
+
+```javascript
+// Provide custom parsing for a custom progress tracking label.
+// Label consists of a series of discrete images, displayed according to progress level.
+parseLabelNode: function(labelNode) {
+	var textNode = $("Text", labelNode);
+	var progressArray = $("progressArray", labelNode).children();
+	return {
+		text: textNode.text(),
+		progressStates: progressArray
+	};
+}
 ```
 
 #Credential Types
@@ -272,7 +291,10 @@ Custom credentials are intended to provide custom input structures for a field, 
 
 Default credentials only provide an ID and the credential type as fields within the credential node of a given requirement, custom credentials can also provide additional data in the form of key/value pairs within the credential node. This data is added as part of the http://citrix.com/authentication/response/1/extensions namespace, and can include request data for an embedded flash/activeX object, or image data to display. All data values must be passed in as a string and adhere to a structure of Key and Value tags wrapped inside Item tags, as shown within the below example:
 
-```<?xml version="1.0" encoding="UTF-8"?><AuthenticateResponse xmlns="http://citrix.com/authentication/response/1"xmlns:ext="http://citrix.com/authentication/response/extensions/1">
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<AuthenticateResponse xmlns="http://citrix.com/authentication/response/1"
+xmlns:ext="http://citrix.com/authentication/response/extensions/1">
 	<AuthenticationRequirements>
 		<Requirements>
 			<Requirement>
@@ -283,7 +305,9 @@ Default credentials only provide an ID and the credential type as fields within 
 						<ext:Item>
 							<ext:Key>value1</ext:Key>
 							<ext:Value>value</ext:Value>
-						</ext:Item>						<ext:Item>							<ext:Key>value2</ext:Key>
+						</ext:Item>
+						<ext:Item>
+							<ext:Key>value2</ext:Key>
 							<ext:Value>true</ext:Value>
 						</ext:Item>
 						<ext:Item>
@@ -294,7 +318,9 @@ Default credentials only provide an ID and the credential type as fields within 
 				</Credential>
 				<Label/>
 				<Input />
-			</Requirement>		</Requirements>	</AuthenticationRequirements>
+			</Requirement>
+		</Requirements>
+	</AuthenticationRequirements>
 </AuthenticateResponse>
 ```
 
@@ -314,7 +340,7 @@ Expected return value is a string containing the credential type.
 
 ####Example
 
-```
+```javascript
 // The name of the credential, must match the type returned by the server
 getCredentialTypeName: function () { return "test-credential"; }
 ```
@@ -337,9 +363,33 @@ Expected return value is a jQuery object with all necessary markup to render the
 If this function is omitted from the credential handler, the handler will return an empty div with the credential type as a class.
 
 ####Example
-```// Rendering instructions for an image selector credential// Images are provided in the ‘display’ field of the displayValues in the requirement as data strings.getCredentialTypeMarkup: function (requirements) {	var $row = $("<tr/>"),		name = requirements.credential.id,		displayValues = requirements.input.radioButton.displayValues,		initialSelection = requirements.input.radioButton.initialSelection;	displayValues.forEach(function (data) {		var value = data.value,			btnId = name + '-' + value;		var $cell = $("<td/>");		var $image = $("<img/>").attr("src", data.display);		var $radioButton = $("<input type='radio'>")			.attr("id", btnId)			.attr("name", name)			.attr("value", value);		if (value === initialSelection) {			$radioButton.prop("checked", true);	}
-		$cell.append($image).append($radioButton);		$row.append($cell);
-	});	var $body = $("<tbody/>").append($row);	return $("<table/>").append($body);}
+
+```javascript
+// Rendering instructions for an image selector credential
+// Images are provided in the ‘display’ field of the displayValues in the requirement as data strings.
+getCredentialTypeMarkup: function (requirements) {
+	var $row = $("<tr/>"),
+		name = requirements.credential.id,
+		displayValues = requirements.input.radioButton.displayValues,
+		initialSelection = requirements.input.radioButton.initialSelection;
+	displayValues.forEach(function (data) {
+		var value = data.value,
+			btnId = name + '-' + value;
+		var $cell = $("<td/>");
+		var $image = $("<img/>").attr("src", data.display);
+		var $radioButton = $("<input type='radio'>")
+			.attr("id", btnId)
+			.attr("name", name)
+			.attr("value", value);
+		if (value === initialSelection) {
+			$radioButton.prop("checked", true);
+	}
+		$cell.append($image).append($radioButton);
+		$row.append($cell);
+	});
+	var $body = $("<tbody/>").append($row);
+	return $("<table/>").append($body);
+}
 ```
 
 #Auto Post Credentials
@@ -353,13 +403,16 @@ Auto post credentials support all of the functions other custom credentials use,
 This function is key to all auto post credentials, as its presence distinguishes an auto post credential from all other custom credentials. This function is called by Receiver for Web upon displaying the form, and is for collecting the information required to authenticate, and returning it via the provided callback to be submitted. The requirements node for the credential is also passed to this function to allow for server provided initial information to be accessed as part of the data collection.
 
 ####Parameters
-|Parameter|Type|Description|
-|---|---|---||`$form`|jQuery object|JQuery selector containing the form the credential is stored in. Provides access to the rest of the form to allow for updating of information such as progress bars and setup instructions (e.g. allowing an ActiveX control to run).|
+
+|Parameter|Type|Description|
+|---|---|---|
+|`$form`|jQuery object|JQuery selector containing the form the credential is stored in. Provides access to the rest of the form to allow for updating of information such as progress bars and setup instructions (e.g. allowing an ActiveX control to run).|
 |requirements|object|Parsed contents of the requirements node provided by the server. See Appendix I for details.|
 |callback|function|Callback function to be called to complete the auto post segment, the function has a single parameter and expects the data gathered to be provided as a string.|
-####Example
 
-```
+####Example
+
+```javascript
 // Function where information to be auto-posted is generated, and posted via the callback provided as a parameter
 getDataToAutoPost: function ($form, requirements, callback) { callback( navigator.userAgent ); }
 ```
@@ -369,7 +422,15 @@ As Receiver for Web handles field population for auto post credentials, getCrede
 
 ####Example
 
-```// Additional custom markup for a credentialgetCredentialTypeMarkup: function (requirements) {	// URL of browser plugin that does gathering passed in as input’s initial value	var gathererSource = requirements.input.text.initialValue;	var $div = $("<div/>").addClass(this.getCredentialTypeName()).attr('id', "auto-post-test");	var $gatherer = $("<object/>").attr("data", gathererSource);	$div.append($gatherer);	return $div;
+```javascript
+// Additional custom markup for a credential
+getCredentialTypeMarkup: function (requirements) {
+	// URL of browser plugin that does gathering passed in as input’s initial value
+	var gathererSource = requirements.input.text.initialValue;
+	var $div = $("<div/>").addClass(this.getCredentialTypeName()).attr('id', "auto-post-test");
+	var $gatherer = $("<object/>").attr("data", gathererSource);
+	$div.append($gatherer);
+	return $div;
 }
 ```
 
@@ -392,32 +453,75 @@ Any data gathered by the credential must be encoded into a string in order to be
 
 When creating a plugin to provide credential and label handlers to Receiver for Web, it is recommended that the following basic template is used:
 
-```
-(function ($) {	CTXS.ExtensionAPI.addPlugin({		// This is required and must match the plugin name defined in the web.config.		// If it doesn't match, the plugin will not load correctly		name: "Example",		initialize: function (args) {			// Add credential/label handlers here		}	});
-	// Additional functions used within the handlers can be added here})(jQuery);
+```javascript
+(function ($) {
+	CTXS.ExtensionAPI.addPlugin({
+		// This is required and must match the plugin name defined in the web.config.
+		// If it doesn't match, the plugin will not load correctly
+		name: "Example",
+		initialize: function (args) {
+			// Add credential/label handlers here
+		}
+	});
+	// Additional functions used within the handlers can be added here
+})(jQuery);
 ```
 
 All that is needed to build on this template is to ensure that the plugin name matches that of the entry in the web.config file, and to add the relevant credential or label handlers.
 
 ##Example Credential Handler
 
-Below is a template for a minimal credential hander:```
-// Sample Credential handlerCTXS.ExtensionAPI.addCustomCredentialHandler({// The name of the credential, must match the type returned by the servergetCredentialTypeName: function () { return "example-credential"; },// Rendering instructions for the credentialgetCredentialTypeMarkup: function (requirements) {}
-// Rendering instructions go here});
+Below is a template for a minimal credential hander:
+
+```javascript
+// Sample Credential handler
+CTXS.ExtensionAPI.addCustomCredentialHandler({
+// The name of the credential, must match the type returned by the server
+getCredentialTypeName: function () { return "example-credential"; },
+// Rendering instructions for the credential
+getCredentialTypeMarkup: function (requirements) {
+}
+// Rendering instructions go here
+});
 ```
 
 ##Example Auto Post Credential Handler
 
-Below is an example minimally defined auto post credential hander designed to gather the user agent string for demonstration purposes:```// Auto-post credentialCTXS.ExtensionAPI.addCustomCredentialHandler({// The name of the credential, must match the type returned by the servergetCredentialTypeName: function () { return "example-auto-post"; },/* Function where information to be auto-posted is generated,}
-and posted via the callback provided as a parameter */getDataToAutoPost: function ($form, callback) {callback(navigator.userAgent);});
+Below is an example minimally defined auto post credential hander designed to gather the user agent string for demonstration purposes:
+
+```javascript
+// Auto-post credential
+CTXS.ExtensionAPI.addCustomCredentialHandler({
+// The name of the credential, must match the type returned by the server
+getCredentialTypeName: function () { return "example-auto-post"; },
+/* Function where information to be auto-posted is generated,
+}
+and posted via the callback provided as a parameter */
+getDataToAutoPost: function ($form, callback) {
+callback(navigator.userAgent);
+});
 ```
 
 ##Example Label Handler
 
 Below is an example of a minimally defined custom label. This example will add a provided flash object to the form. As the flash object is provided as a binary string by the server, the label requests to be parsed as an image, which already leverages a ‘binary’ node.
 
-```
-// Sample Label handlerCTXS.ExtensionAPI.addCustomAuthLabelHandler({// The name of the label, must match the type returned by the servergetLabelTypeName: function () { return "test-label"; },// Rendering instructions for the labelgetLabelTypeMarkup: function (requirements) {return $("<object/>").attr("src", requirements.label.binary).addClass("flash-object");},// Instruction to parse the label as if it was a standard typeparseAsType: function () {return "image";}});
+```javascript
+// Sample Label handler
+CTXS.ExtensionAPI.addCustomAuthLabelHandler({
+// The name of the label, must match the type returned by the server
+getLabelTypeName: function () { return "test-label"; },
+// Rendering instructions for the label
+getLabelTypeMarkup: function (requirements) {
+return $("<object/>")
+.attr("src", requirements.label.binary)
+.addClass("flash-object");
+},
+// Instruction to parse the label as if it was a standard type
+parseAsType: function () {
+return "image";
+}
+});
 ```
 
 #Appendix I – Requirements Object
@@ -427,7 +531,7 @@ Having received the authentication requirements from the server as an XML docume
 ##Expected Structure
 For credential handler functions, the entire requirement will be passed, meaning that the object will adhere to the basic pattern outlined below, for label handlers, only the label component of the requirement will be passed.
 
-```
+```javascript
 {
 	"credential": {...},
 	"label": {..},
@@ -439,13 +543,21 @@ For credential handler functions, the entire requirement will be passed, meaning
 
 The credential element contains, by default:
 
-|Property name|Value type|Description||---|---|---||Id|String|ID of the requirement||Type|String|The credential type|
+|Property name|Value type|Description|
+|---|---|---|
+|Id|String|ID of the requirement|
+|Type|String|The credential type|
 
 ###Label
 
 Labels provide different parsing based on what type they have. These expectations are also applicable to custom labels with the ‘parseAsType’ function defined.
-  |Property Name|Expected for|Mapping from XML|Value type|Description|
-|---|---|---|---|---||type|All|Type → type|String|The label type||src|Image|Binary → src|String|Source for the image to display||text|plain <br> heading<br> information <br> warning<br>  error<br>  confirmation <br> inprogress|Text → text|String|The text to display.|highlightFields|plain <br> heading <br> information <br> warning <br> error<br>  confirmation <br> inprogress<br>|HighlightFields → highlightFields <br> <br> each entry maps<br> <br> HighlightFields[CredentialID] → highlightFields| Array of Strings|An optional list of other credential IDs to be highlighted.|
+  
+|Property Name|Expected for|Mapping from XML|Value type|Description|
+|---|---|---|---|---|
+|type|All|Type → type|String|The label type|
+|src|Image|Binary → src|String|Source for the image to display|
+|text|plain <br> heading<br> information <br> warning<br>  error<br>  confirmation <br> inprogress|Text → text|String|The text to display.
+|highlightFields|plain <br> heading <br> information <br> warning <br> error<br>  confirmation <br> inprogress<br>|HighlightFields → highlightFields <br> <br> each entry maps<br> <br> HighlightFields[CredentialID] → highlightFields| Array of Strings|An optional list of other credential IDs to be highlighted.|
 
 ###Input
 
@@ -461,7 +573,9 @@ Every input node has a field for each possible input, however it is expected tha
 
 ##Example – Test Forms
 
-The test forms StoreFront sample now includes additional forms including custom credentials and labels to test. Below is the XML representation for one of these forms as provided by the server:```
+The test forms StoreFront sample now includes additional forms including custom credentials and labels to test. Below is the XML representation for one of these forms as provided by the server:
+
+```xml
 <AuthenticateResponse xmlns="http://citrix.com/authentication/response/1">
 <Status>success</Status>
 <Result>more-info</Result>
@@ -545,7 +659,7 @@ The test forms StoreFront sample now includes additional forms including custom 
 ```
 Following parsing, the relevant requirement object is passed to the credential for markup generation, as part of this the label specific nodes are provided to the label for markup generation. In the example above, the following would be passed to the credential handler for test-credential:
 
-```
+```json
 {
   "credential": {
     "id": "customCredentialId",
@@ -586,8 +700,9 @@ Following parsing, the relevant requirement object is passed to the credential f
  
 Whereas the label handler for test-label would receive the following:
 
-```
-{ "type": "test-label",
+```javascript
+{
+ "type": "test-label",
  "text": "surprise!",
  "highlightFields": [ ]
  }
