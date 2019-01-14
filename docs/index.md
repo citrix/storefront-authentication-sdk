@@ -57,7 +57,7 @@ The following prerequisites are required, installed in the following order:
 
 [9] [StoreFront Authentication Form Generation 1811](storefront-authentication-form-generation.md)
 
-[10] [StoreFront Authentication SDK JavaScript API 1811](storefront-authentication-sdk-javascript.md)
+[10] [StoreFront Authentication SDK JavaScript API 1811](storefront-authentication-sdk-javascript-api.md)
 
 [11] [Citrix StoreFront PowerShell SDK](https://developer-docs.citrix.com/projects/storefront-powershell-sdk/en/latest/)
 
