@@ -130,7 +130,7 @@ This is rendered as:
 
 ### Requirement Element Idioms
 
-Examples of the common types of Requirement elements are shown below. Element values that are <mark>highlighted</mark> identify variable names or user-visible labels that are controlled by the author of the authentication form. Element values that are bolded and underscored indicate field enumeration types defined in this document.
+Examples of the common types of Requirement elements are shown below.
 
 #### Cancel Button
 
