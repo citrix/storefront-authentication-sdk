@@ -22,7 +22,7 @@ The configuration of Receiver for Web is controlled by the web.config file, as s
 
 Below is an example of one such merge file:
 
-```
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <merge>
   <!-- Add the plugin definition -->
@@ -52,7 +52,7 @@ To provide additional scripts in addition to the primary file. Each script eleme
 
 ####Example
 
-```
+```xml
 <plugin name="Example Dependency" src="plugins/YourCompany/Script.js">
 	<scripts>
 		<script src="chrome-extension://example-extension/example.js"/>
@@ -72,7 +72,7 @@ To provide style sheets alongside the primary JavaScript file. Each style elemen
 
 ####Example
 
-```
+```xml
 <plugin name="Style Example" src="plugins/YourCompany/Script.js">
 	<styles>
 		<style src="plugins/YourCompany/Styles.css" />
@@ -95,7 +95,7 @@ To provide data to the plugins, passed in as a parameter in the plugins ‘initi
 
 ####Example
 
-```
+```xml
 <plugin name="Parameter Example" src="plugins/YourCompany/Script.js">
 	<params>
 		<param name="data-gatherer" value="plugins/YourCompany/example.ocx" />
@@ -108,7 +108,7 @@ To provide data to the plugins, passed in as a parameter in the plugins ‘initi
 
 A single plugin can have any combination of these child elements, as in the below example:
 
-```
+```xml
 <plugin name="Combined Example" src="plugins/YourCompany/Script.js">
 	<scripts>
 		<script src="chrome-extension://example-extension/example.js"/>
@@ -206,7 +206,7 @@ Expected return value is a string containing the label type.
 
 ####Example
 
-```
+```javascript
  // The name of the label, must match the type returned by the server
  getLabelTypeName: function () { return "test-label"; }
 ```
@@ -708,31 +708,31 @@ Whereas the label handler for test-label would receive the following:
  }
 ```
  
-#Appendix II – Parse errors
+# Appendix II – Parse errors
 
-##How to access parse errors
+## How to access parse errors
 
 Parsing errors are outputted to the browser console, prefixed with “ctxsFormsAuthentication: ”.
 
-##Error Messages Associated with Custom Credentials & Labels
+## Error Messages Associated with Custom Credentials & Labels
 
-**“More than one field in a form containing an auto-post credential is not allowed.”**
+### “More than one field in a form containing an auto-post credential is not allowed."
 
-######Likely Cause
+#### Likely Cause
 
 Due to limitations surrounding submitting auto post credentials, auto post credentials must be the only submittable field in the form.
 
 This error will occur if any field is present alongside an auto post field in a form, the only exception being a standalone label, which must be placed before the auto post field.
 
-######Possible next steps
+#### Possible next steps
 
 Check if the desired auto post field is the only field in the form. If you have more than one auto post field, spread them across multiple forms.
 
-**“Unknown label type \<TYPE>” or “Unrecognised label type : \<TYPE>”**
+### “Unknown label type \<TYPE>” or “Unrecognised label type : \<TYPE>”
 
-######Likely Cause
+#### Likely Cause
 
 The label is not recognised. If it’s a custom label, it may not be registering the label handler correctly.
 
-######Possible next steps
+#### Possible next steps
 Check that the string provided by getLabelTypeName matches the type provided by the server for that form.
