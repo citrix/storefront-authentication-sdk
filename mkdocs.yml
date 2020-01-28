@@ -2,6 +2,7 @@
 site_name: Citrix StoreFront 1811 Authentication SDK
 site_description: Documentation and Reference Guide for the Citrix StoreFront 1811 Authentication SDK
 site_title: Developer Docs
+site_url: https://developer-docs.citrix.com
 
 # Copyright
 copyright: 'Copyright &copy; 1999-2019 Citrix Systems, Inc. All rights reserved. '
@@ -70,3 +71,4 @@ nav:
 - Magic Word Sample: magic-word-sample.md
 - Test Forms Sample: test-forms-sample.md
 - U2F Sample: u2f-sample.md
+- Questions?: https://discussions.citrix.com/forum/1385-citrix-developer-exchange/
