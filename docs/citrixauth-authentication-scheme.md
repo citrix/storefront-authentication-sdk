@@ -8,9 +8,9 @@ The purpose of this document is to describe the CitrixAuth authentication scheme
 
 ###CitrixAuth Scheme
 
-This section defines an [RFC2617](http://tools.ietf.org/html/rfc2617)[1] extension to support authentication to StoreFront Services Relying Parties, such as the resources service. The extension auth-scheme is CitrixAuth and is case-sensitive. It uses the standard HTTP Authorization and WWW-Authenticate HTTP headers as defined in RFC2617.
+This section defines an [RFC 2617](https://www.ietf.org/rfc/rfc2617.txt)[1] extension to support authentication to StoreFront Services Relying Parties, such as the resources service. The extension auth-scheme is CitrixAuth and is case-sensitive. It uses the standard HTTP Authorization and WWW-Authenticate HTTP headers as defined in RFC 2617.
 
-The headers have the following formats, in conformance with RFC2617:
+The headers have the following formats, in conformance with RFC 2617:
 
 `Authorization: CitrixAuth {security-token}`
 
@@ -25,7 +25,7 @@ The parameters are defined by the following:
 
 | Parameter | Description|
 |---|---|
-|{service-id}|The unique identifier of the consuming service. With the hostname of the service being accessed it defines a Protection Space as per RFC2617 section 1.2|
+|{service-id}|The unique identifier of the consuming service. With the hostname of the service being accessed it defines a Protection Space as per RFC 2617 section 1.2|
 |{security-token}|The serialized security token used to authenticate the user|
 |{template}|This is a string that shall be passed by the client to the server when requesting a token for a specific service. The server can use this value to determine the token format to use. This value should be empty for current implementations, but must still be passed to the server.|
 |{reason-description}|The reason why a challenge has been issued. This is to assist the client with managing cached tokens.|
@@ -49,7 +49,7 @@ The reason-description may be one of the following values:
 
 ###Protection Space
 
-RFC2617 section 1.2 defines a Protection Space as the domain over which credentials can be automatically applied. If a prior request has been authorized, the same credentials may be reused for all other requests within that protection space for a period of time determined by the authentication scheme, parameters, and/or user preference. The CitrixAuth scheme is consistent with other schemes in that a single protection space cannot extend outside the scope of its server. The CitrixAuth scheme uses both the service-id (Realm) and the audience to which the request is to be sent, to define a protection space, and the client should not automatically send credentials to services outside of the protection space defined for a particular credential. In this context, the audience is defined by the scheme, host name, and port associated with the original request.
+RFC 2617 section 1.2 defines a Protection Space as the domain over which credentials can be automatically applied. If a prior request has been authorized, the same credentials may be reused for all other requests within that protection space for a period of time determined by the authentication scheme, parameters, and/or user preference. The CitrixAuth scheme is consistent with other schemes in that a single protection space cannot extend outside the scope of its server. The CitrixAuth scheme uses both the service-id (Realm) and the audience to which the request is to be sent, to define a protection space, and the client should not automatically send credentials to services outside of the protection space defined for a particular credential. In this context, the audience is defined by the scheme, host name, and port associated with the original request.
 The serviceroot-hint in the challenge provides the client with the root of the protection space for the current request. This enables a better caching strategy in the client, if the initial request is not to the root of the protection space.
 
 ###Example
@@ -136,6 +136,6 @@ Notes:
 
 ###References
 
-[1] HTTP Authentication: Basic and Digest Access Authentication: <http://www.ietf.org/rfc/rfc2617.txt>
+[1] HTTP Authentication: Basic and Digest Access Authentication: <https://www.ietf.org/rfc/rfc2617.txt>
 
 [2] [StoreFront Security Token Services API 1811](security-token-services-api.md)
